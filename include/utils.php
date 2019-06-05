@@ -454,7 +454,7 @@ function getRunningUser()
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN') . '\\' . getenv('USERNAME');
-        } else {
+        } elseif (function_exists('posix_getpwuid')) {
             $usr = posix_getpwuid(posix_geteuid());
             $runningUser = $usr['name'];
         }
